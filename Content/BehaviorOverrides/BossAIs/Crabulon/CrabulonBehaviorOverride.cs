@@ -494,7 +494,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Crabulon
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Utilities.NewProjectileBetter(clawCenter, Vector2.UnitX * i * -6f, ProjectileID.DD2OgreSmash, 0, 0f);
 
-                        if (target.WithinRange(clawCenter, 100f))
+                        if (Main.netMode != NetmodeID.MultiplayerClient && target.WithinRange(clawCenter, 100f))
                             target.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage, i);
 
                         // Release a bunch of falling crab shrooms into the air from both arms.

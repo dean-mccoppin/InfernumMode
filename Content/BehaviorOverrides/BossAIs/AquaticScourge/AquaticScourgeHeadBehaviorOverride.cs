@@ -401,8 +401,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.AquaticScourge
                 float cameraInterpolant = Utils.GetLerpValue(acidWarningDelay, acidWarningDelay + 10f, attackTimer, true) * Utils.GetLerpValue(waterBubbleTime - 1f, waterBubbleTime - 10f, attackTimer, true);
                 if (bubbleProj is not null)
                 {
-                    target.Infernum_Camera().ScreenFocusInterpolant = cameraInterpolant;
-                    target.Infernum_Camera().ScreenFocusPosition = bubbleProj.Center;
+                    Utilities.ApplyCameraFocusToNearbyPlayers(bubbleProj.Center, cameraInterpolant, npc.Center);
                 }
             }
 

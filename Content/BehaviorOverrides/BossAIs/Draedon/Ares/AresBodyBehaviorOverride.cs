@@ -65,6 +65,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Ares
             ExoMechManagement.Phase4LifeRatio
         ];
 
+        // Lower HP scaling for Exo Mechs since multiple entities are present.
+        public override float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.3f;
+
         public const int BackArmSwapDelay = 1800;
 
         public const int AresLaserStartSoundDuration = 174;
@@ -922,7 +925,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Ares
             if (wrappedAttackTimer == anticipationTime + sliceTime - 5f)
             {
                 // Create slice impact lasers.
-                target.Infernum_Camera().CurrentScreenShakePower = 13.5f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 13.5f);
                 ScreenEffectSystem.SetFlashEffect(target.Center, 0.8f, 18);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {

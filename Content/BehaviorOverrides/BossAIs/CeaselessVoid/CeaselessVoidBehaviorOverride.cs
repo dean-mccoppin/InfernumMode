@@ -777,7 +777,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
                 npc.Infernum().ExtraAI[0] = 0f;
 
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 0.4f, 10);
-                target.Infernum_Camera().CurrentScreenShakePower = 8f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 8f);
             }
 
             // Create convergence particles.
@@ -810,7 +810,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             {
                 // Create impact effects.
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 0.4f, 24);
-                target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
                 Utilities.CreateShockwave(npc.Center, 2, 8, 75f, true);
                 SoundEngine.PlaySound(InfernumSoundRegistry.CeaselessVoidStrikeSound with { Pitch = 0.4f }, target.Center);
             }
@@ -920,7 +920,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
 
             if (wrappedAttackTimer == accelerateDelay + AcceleratingDarkEnergy.SpinTime)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
                 SoundEngine.PlaySound(InfernumSoundRegistry.CeaselessVoidStrikeSound with { Pitch = -0.6f }, target.Center);
             }
         }
@@ -1000,7 +1000,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             // Charge up energy before performing whitening.
             if (attackTimer <= chargeUpTime)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = attackTimer / chargeUpTime * 3f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, attackTimer / chargeUpTime * 3f);
 
                 // Create a slice effect through the void right before the screen whitening happens.
                 if (attackTimer == chargeUpTime - CeaselessVoidLineTelegraph.Lifetime)
@@ -1025,7 +1025,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             // Break the metal.
             if (attackTimer == chargeUpTime + whiteningTime)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = 24f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 24f);
 
                 SoundEngine.PlaySound(InfernumSoundRegistry.CeaselessVoidMetalBreakSound);
                 voidIsCracked = 1f;
@@ -1086,7 +1086,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
                 // Create a pulse particle before firing.
                 if (attackTimer == chargeUpTime - 20f)
                 {
-                    target.Infernum_Camera().CurrentScreenShakePower = 24f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 24f);
                     Utilities.CreateShockwave(npc.Center, 12, 5, 64f, false);
                     ScreenEffectSystem.SetBlurEffect(npc.Center, 0.5f, 20);
                 }
@@ -1174,11 +1174,11 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
 
             // Make the screen shake at first.
             if (attackTimer >= attackDelay && attackTimer <= attackDelay + suckTime)
-                target.Infernum_Camera().CurrentScreenShakePower = Utils.GetLerpValue(attackDelay + suckTime - 90f, attackDelay + suckTime, attackTimer, true) * 12f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, Utils.GetLerpValue(attackDelay + suckTime - 90f, attackDelay + suckTime, attackTimer, true) * 12f);
 
             if (attackTimer == attackDelay + suckTime)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = 18f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 18f);
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 0.6f, 25);
 
                 SoundEngine.PlaySound(InfernumSoundRegistry.CeaselessVoidStrikeSound with { Volume = 2f, Pitch = -0.5f });
@@ -1302,7 +1302,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             // Charge up energy before performing whitening.
             if (attackTimer <= chargeUpTime)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = attackTimer / chargeUpTime * 8f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, attackTimer / chargeUpTime * 8f);
                 CreateEnergySuckParticles(npc, Vector2.Zero, 240f, 1120f, 0.4f);
 
                 // Create pulse rings and bloom periodically.
@@ -1326,7 +1326,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             // Break the chains.
             if (attackTimer == chargeUpTime + whiteningTime)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = 25f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 25f);
 
                 SoundEngine.PlaySound(CeaselessVoidBoss.DeathSound);
                 DestroyChains(npc);
@@ -1614,7 +1614,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             {
                 float jitterSpeed = attackTimer / jitterTime * 12f;
                 npc.Center += Main.rand.NextVector2CircularEdge(jitterSpeed, jitterSpeed);
-                target.Infernum_Camera().CurrentScreenShakePower = jitterSpeed * 0.8f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, jitterSpeed * 0.8f);
 
                 // Charge energy.
                 CreateEnergySuckParticles(npc, Vector2.Zero);
@@ -1635,7 +1635,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CeaselessVoid
             if (attackTimer == jitterTime)
             {
                 // Perform screen effects.
-                target.Infernum_Camera().CurrentScreenShakePower = 16f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 16f);
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 0.3f, 25);
 
                 // Play impactful sounds.

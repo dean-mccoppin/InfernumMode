@@ -611,8 +611,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.QueenSlime
                 npc.velocity *= 0.85f;
                 npc.position.X += Math.Sign(target.Center.X - npc.Center.X) * 2f;
 
-                if (target.Infernum_Camera().CurrentScreenShakePower < 1.85f)
-                    target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
             }
 
             // Release the blade spawning laser thing.
@@ -620,7 +619,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.QueenSlime
             {
                 SoundEngine.PlaySound(InfernumSoundRegistry.QueenSlimeExplosionSound, target.Center);
 
-                target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 0.4f, 36);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -659,7 +658,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.QueenSlime
             {
                 SoundEngine.PlaySound(InfernumSoundRegistry.QueenSlimeExplosionSound, target.Center);
 
-                target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 0.4f, 36);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -859,7 +858,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.QueenSlime
                 telegraphInterpolant = Utils.GetLerpValue(jitterTime, jitterTime + postSplitEffectsTime - 3f, attackTimer, true);
                 if (attackTimer >= jitterTime + postSplitEffectsTime)
                 {
-                    target.Infernum_Camera().CurrentScreenShakePower = 8f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 8f);
                     ScreenEffectSystem.SetBlurEffect(npc.Center, 0.2f, 20);
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -932,7 +931,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.QueenSlime
             // Release bursts of gel that fall downward.
             if (attackTimer % projectileReleaseRate == projectileReleaseRate - 1f && attackTimer < projectileReleaseRate * gelReleaseCount)
             {
-                target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
                 SoundEngine.PlaySound(SoundID.NPCHit1, npc.Center);
 
                 float horizontalSpeedOffset = 3f * Main.rand.NextFloatDirection();

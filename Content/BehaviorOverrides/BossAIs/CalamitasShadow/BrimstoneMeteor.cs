@@ -43,7 +43,10 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
 
             float acceleration = 1.01f;
             float maxSpeed = 17f;
-            if (CalamityGlobalNPC.calamitas != -1 && Main.player[Main.npc[CalamityGlobalNPC.calamitas].target].Infernum_CalShadowHex().HexIsActive("Zeal"))
+
+            // Find the closest player for hex checks, so projectiles spread across players in multiplayer.
+            Player closestPlayer = Projectile.FindClosestActivePlayer();
+            if (closestPlayer is not null && closestPlayer.Infernum_CalShadowHex().HexIsActive("Zeal"))
             {
                 // Start out slower if acceleration is expected.
                 if (Projectile.ai[1] == 0f)

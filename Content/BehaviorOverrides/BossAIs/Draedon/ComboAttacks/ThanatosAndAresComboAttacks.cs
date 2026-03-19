@@ -204,7 +204,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ComboAttacks
                 {
                     float spinSpeed = Utils.GetLerpValue(attackDelay, attackDelay + 60f, attackTimer, true) * Pi / 205f;
 
-                    target.Infernum_Camera().CurrentScreenShakePower = 1.5f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 1.5f);
 
                     // Make the lasers slower in multiplayer.
                     if (Main.netMode != NetmodeID.SinglePlayer)

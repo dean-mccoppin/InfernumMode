@@ -24,6 +24,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Twins
             Phase3LifeRatioThreshold
         ];
 
+        // Lower HP scaling for Twins since two entities are already present.
+        public override float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.35f;
+
         #region Loading
         public override void Load()
         {

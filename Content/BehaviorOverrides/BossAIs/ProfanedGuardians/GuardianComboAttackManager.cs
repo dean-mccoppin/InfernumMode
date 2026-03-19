@@ -531,7 +531,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode with { Pitch = 0.35f, Volume = 1.6f }, target.Center);
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
-                            target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
                             ScreenEffectSystem.SetFlashEffect(npc.Center, 0.2f, 30);
                         }
                         npc.damage = npc.defDamage;
@@ -704,7 +704,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode with { Pitch = 0.35f, Volume = 1.6f }, target.Center);
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
-                            target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
                             ScreenEffectSystem.SetFlashEffect(npc.Center, 0.2f, 30);
                         }
                         npc.damage = npc.defDamage;
@@ -1826,7 +1826,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
 
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
-                            target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
                             ScreenEffectSystem.SetFlashEffect(npc.Center, 0.4f, 30);
                         }
 
@@ -1916,12 +1916,11 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                 float symbolSpawnRate = 15f;
 
                 Vector2 focusPosition = target.Center + new Vector2(0f, target.gfxOffY) + (-0.4f).ToRotationVector2() * 70f;
-                target.Infernum_Camera().ScreenFocusInterpolant = 1f;
-                target.Infernum_Camera().ScreenFocusPosition = focusPosition;
+                Utilities.ApplyCameraFocusToNearbyPlayers(focusPosition, 1f, focusPosition);
 
                 if (substate < 6f)
                 {
-                    target.Infernum_Camera().CurrentScreenShakePower = 2f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 2f);
 
                     // Do not take damage.
                     npc.dontTakeDamage = true;
@@ -2271,7 +2270,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                         }
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
-                            target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
                             ScreenEffectSystem.SetBlurEffect(npc.Center, 0.75f, 45);
                         }
                         universalAttackTimer = 0;
@@ -2349,7 +2348,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
 
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
-                            target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
                             ScreenEffectSystem.SetFlashEffect(npc.Center, 0.5f, 45);
                         }
                         // Hurt itself.
@@ -2599,7 +2598,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                         ScreenEffectSystem.SetFlashEffect(spearTip, 0.5f, 45);
 
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
-                            target.Infernum_Camera().CurrentScreenShakePower = 4f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 4f);
 
                         Vector2 spearVelocity = npc.SafeDirectionTo(target.Center) * Main.rand.NextFloat(spearSpeed * 0.9f, spearSpeed * 1.1f);
                         // Recoil back slightly.
@@ -2743,7 +2742,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                         ScreenEffectSystem.SetFlashEffect(target.Center, 0.5f, 45);
 
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
-                            target.Infernum_Camera().CurrentScreenShakePower = 4f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 4f);
 
                         CreateFireExplosion(spawnPosition, false);
 
@@ -2871,7 +2870,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
                             ScreenEffectSystem.SetBlurEffect(npc.Center, 1f, 30);
-                            target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
                         }
 
                         spearStatus = (float)DefenderShieldStatus.ActiveAndStatic;
@@ -2982,7 +2981,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
 
             if (Main.player.IndexInRange(commander.target))
             {
-                Main.player[commander.target].Infernum_Camera().CurrentScreenShakePower = commander.Infernum().ExtraAI[GuardianSkyExtraIntensityIndex] * 12f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(commander.Center, commander.Infernum().ExtraAI[GuardianSkyExtraIntensityIndex] * 12f);
                 ScreenEffectSystem.SetBlurEffect(commander.Center, 2f, 90);
             }
             commander.netUpdate = true;

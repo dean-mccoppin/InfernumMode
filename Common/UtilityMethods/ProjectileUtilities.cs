@@ -88,6 +88,11 @@ namespace InfernumMode
         /// <param name="ai2">An optional <see cref="NPC.ai"/>[2] fill value. Defaults to 0.</param>
         public static int NewProjectileBetter(float spawnX, float spawnY, float velocityX, float velocityY, int type, int damage, float knockback, int owner = -1, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f)
         {
+            // In multiplayer, projectiles spawned by boss AI should only be created on the server.
+            // The server will sync them to clients automatically via netUpdate.
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return Main.maxProjectiles;
+
             if (owner == -1)
                 owner = Main.myPlayer;
             damage = (int)(damage * 0.5);
@@ -148,6 +153,29 @@ namespace InfernumMode
             DrawBackglow(projectile, backglowColor, backglowArea, frame);
             SpriteEffects direction = projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.Draw(texture, drawPosition, frame, projectile.GetAlpha(lightColor), projectile.rotation, origin, projectile.scale, direction, 0f);
+        }
+
+        /// <summary>
+        /// Finds the closest active, living player to this projectile. Returns null if no players are alive.
+        /// Useful in multiplayer to distribute projectile effects across players rather than always targeting the boss's single target.
+        /// </summary>
+        public static Player FindClosestActivePlayer(this Projectile projectile)
+        {
+            Player closest = null;
+            float closestDist = float.MaxValue;
+            foreach (Player player in Main.ActivePlayers)
+            {
+                if (player.dead || player.ghost)
+                    continue;
+
+                float dist = player.Distance(projectile.Center);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closest = player;
+                }
+            }
+            return closest;
         }
 
         public static Projectile FindProjectileByIdentity(int identity, int ownerIndex)

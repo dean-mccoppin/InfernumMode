@@ -85,7 +85,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Perforators
             // Play and indicator sound and make the screen shake to tell the player that the worm is ready to lunge upward.
             if (wrappedAttackTimer == 180f)
             {
-                target.Calamity().GeneralScreenShakePower = 5f;
+                Utilities.ApplyScreenShakeToNearbyPlayers(npc.Center, 5f);
                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, target.Center);
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, target.Center);
             }

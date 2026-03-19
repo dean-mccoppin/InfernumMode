@@ -37,16 +37,19 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
 
             float maxSpeed = 16f;
             float acceleration = 1.034f;
-            if (CalamityGlobalNPC.calamitas != -1 && Main.player[Main.npc[CalamityGlobalNPC.calamitas].target].Infernum_CalShadowHex().HexIsActive("Zeal"))
+
+            // Find the closest player for hex checks and homing, so projectiles spread across players in multiplayer.
+            Player closestPlayer = Projectile.FindClosestActivePlayer();
+            if (closestPlayer is not null && closestPlayer.Infernum_CalShadowHex().HexIsActive("Zeal"))
             {
                 maxSpeed = 21.5f;
                 acceleration = 1.031f;
             }
 
-            // Home in weakly if the shadow's target has the appropriate hex.
-            if (CalamityGlobalNPC.calamitas != -1 && Main.player[Main.npc[CalamityGlobalNPC.calamitas].target].Infernum_CalShadowHex().HexIsActive("Accentuation"))
+            // Home in weakly if the closest player has the appropriate hex.
+            if (closestPlayer is not null && closestPlayer.Infernum_CalShadowHex().HexIsActive("Accentuation"))
             {
-                float idealDirection = Projectile.AngleTo(Main.player[Main.npc[CalamityGlobalNPC.calamitas].target].Center);
+                float idealDirection = Projectile.AngleTo(closestPlayer.Center);
                 Projectile.velocity = Projectile.velocity.RotateTowards(idealDirection, 0.006f);
             }
 

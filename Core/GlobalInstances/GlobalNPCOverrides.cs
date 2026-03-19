@@ -149,6 +149,25 @@ namespace InfernumMode.Core.GlobalInstances
                 npc.netUpdate = true;
             }
 
+            // Scale boss HP based on player count in multiplayer.
+            if (!npc.Infernum().HasResetHP && npc.Infernum().TotalPlayersAtStart.HasValue && npc.Infernum().TotalPlayersAtStart.Value > 1)
+            {
+                int playerCount = npc.Infernum().TotalPlayersAtStart.Value;
+
+                // Use per-boss scaling factor if a behavior override is registered, otherwise use the default formula.
+                float multiplier;
+                var container = NPCBehaviorOverride.BehaviorOverrideSet[npc.type];
+                if (InfernumMode.CanUseCustomAIs && container is not null)
+                    multiplier = container.BehaviorOverride.GetMultiplayerHPScaleFactor(playerCount);
+                else
+                    multiplier = 1f + (playerCount - 1) * 0.5f;
+
+                npc.lifeMax = (int)(npc.lifeMax * multiplier);
+                npc.life = npc.lifeMax;
+                npc.Infernum().HasResetHP = true;
+                npc.netUpdate = true;
+            }
+
             if (!InfernumMode.CanUseCustomAIs)
                 return base.PreAI(npc);
 

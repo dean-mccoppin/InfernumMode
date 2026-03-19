@@ -26,6 +26,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ArtemisAndApoll
             ExoMechManagement.Phase4LifeRatio
         ];
 
+        // Lower HP scaling for Exo Mechs since multiple entities are present.
+        public override float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.3f;
+
         #region Netcode Syncs
 
         public override void SendExtraData(NPC npc, ModPacket writer) => writer.Write(npc.Opacity);

@@ -172,7 +172,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.DesertScourge
                 }
 
                 // Create screen shake effects.
-                target.Infernum_Camera().CurrentScreenShakePower = Pow(groundShakeInterpolant, 1.81f) * 10f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, Pow(groundShakeInterpolant, 1.81f) * 10f);
 
                 // Stick below the target.
                 npc.velocity = Vector2.UnitY * -9f;

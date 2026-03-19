@@ -461,7 +461,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.AstrumAureus
                                     Main.projectile[stomp].Size = new(npc.width + 120, 50);
                             }
 
-                            target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
 
                             // Determine whether the attack should be repeated.
                             stompCounter++;

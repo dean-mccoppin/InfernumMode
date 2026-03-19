@@ -91,7 +91,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.PlaguebringerGoliath
                 // Explode and die after the explosion delay is passed.
                 if (ExistTimer > BuildTime + ExplodeDelay)
                 {
-                    Target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(NPC.Center, 12f);
                     ScreenEffectSystem.SetBlurEffect(NPC.Center, 0.4f, 32);
 
                     SoundEngine.PlaySound(InfernumSoundRegistry.PBGNukeExplosionSound with

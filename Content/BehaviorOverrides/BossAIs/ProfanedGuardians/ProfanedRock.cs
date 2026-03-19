@@ -133,7 +133,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
                             GeneralParticleHandler.SpawnParticle(fire);
                         }
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
-                            target.Infernum_Camera().CurrentScreenShakePower = 2f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(Projectile.Center, 2f);
                     }
                     break;
 

@@ -176,7 +176,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.ProfanedGuardians
 
                         if ((CalamityClientConfig.Instance.ScreenshakePower > 0f))
                         {
-                            target.Infernum_Camera().CurrentScreenShakePower = 20f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 20f);
                             ScreenEffectSystem.SetBlurEffect(npc.Center, 2f, 60);
                         }
 

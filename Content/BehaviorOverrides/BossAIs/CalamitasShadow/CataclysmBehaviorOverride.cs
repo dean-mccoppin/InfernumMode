@@ -441,7 +441,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                     if (wrappedAttackTimer == attackDelay + uppercutTime && !npc.WithinRange(target.Center, 300f))
                     {
                         SoundEngine.PlaySound(InfernumSoundRegistry.SizzleSound with { Pitch = -0.5f }, target.Center);
-                        target.Infernum_Camera().CurrentScreenShakePower = 5f;
+                        Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 5f);
                         ScreenEffectSystem.SetFlashEffect(npc.Center, 1f, 20);
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)

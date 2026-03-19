@@ -396,9 +396,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.GreatSandShark
                 return;
 
             // Have the camera zoom in on the vassal once the animation begins.
-            Target.Infernum_Camera().ScreenFocusInterpolant = Utils.GetLerpValue(2f, animationFocusTime, AttackTimer, true);
-            Target.Infernum_Camera().ScreenFocusInterpolant *= Utils.GetLerpValue(0f, -animationFocusReturnTime, AttackTimer - animationFocusTime - animationTime, true);
-            Target.Infernum_Camera().ScreenFocusPosition = NPC.Center;
+            float focusInterpolant = Utils.GetLerpValue(2f, animationFocusTime, AttackTimer, true);
+            focusInterpolant *= Utils.GetLerpValue(0f, -animationFocusReturnTime, AttackTimer - animationFocusTime - animationTime, true);
+            Utilities.ApplyCameraFocusToNearbyPlayers(NPC.Center, focusInterpolant, NPC.Center);
 
             // Spin the spear.
             int animationTimer = (int)(AttackTimer - animationFocusTime);
@@ -1207,7 +1207,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.GreatSandShark
                 NPC.damage = 0;
                 NPC.dontTakeDamage = true;
 
-                Target.Calamity().GeneralScreenShakePower = AttackTimer / tornadoSummonDelay * 5f;
+                Utilities.ApplyScreenShakeToNearbyPlayers(NPC.Center, AttackTimer / tornadoSummonDelay * 5f);
 
                 // Play a wind sound and summon tornadoes.
                 if (AttackTimer == tornadoSummonDelay)
@@ -1597,10 +1597,10 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.GreatSandShark
 
             // Have the camera zoom in on the vassal once the animation begins.
             float screenShakeInterpolant = Utils.GetLerpValue(0f, 60f, AttackTimer - jumpHoverTime - hornSoundTime, true) * Utils.GetLerpValue(-2f, -22f, AttackTimer - jumpHoverTime - hornSoundTime - gssSummonDelay, true);
-            Target.Infernum_Camera().ScreenFocusInterpolant = Utils.GetLerpValue(2f, animationFocusTime, AttackTimer, true);
-            Target.Infernum_Camera().ScreenFocusInterpolant *= Utils.GetLerpValue(-54f, -54f - animationFocusReturnTime, AttackTimer - jumpHoverTime - hornSoundTime - gssSummonDelay, true);
-            Target.Infernum_Camera().CurrentScreenShakePower = screenShakeInterpolant * 6f;
-            Target.Infernum_Camera().ScreenFocusPosition = NPC.Center;
+            float focusInterpolant2 = Utils.GetLerpValue(2f, animationFocusTime, AttackTimer, true);
+            focusInterpolant2 *= Utils.GetLerpValue(-54f, -54f - animationFocusReturnTime, AttackTimer - jumpHoverTime - hornSoundTime - gssSummonDelay, true);
+            Utilities.ApplyCameraShakeToNearbyPlayers(NPC.Center, screenShakeInterpolant * 6f);
+            Utilities.ApplyCameraFocusToNearbyPlayers(NPC.Center, focusInterpolant2, NPC.Center);
 
             // Create sand particles from the left.
             for (int i = 0; i < 6; i++)

@@ -440,7 +440,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Ares
             {
                 // Reset the position cache, so that the trail can be drawn with a fresh set of points.
                 NPC.oldPos = new Vector2[NPC.oldPos.Length];
-                Target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(NPC.Center, 6f);
                 ScreenEffectSystem.SetFlashEffect(Target.Center, 2f, 30);
 
                 // Calculate the starting position of the slash. This is used for determining the orientation of the trail.

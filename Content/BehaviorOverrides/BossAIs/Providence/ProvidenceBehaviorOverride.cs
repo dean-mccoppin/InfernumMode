@@ -643,12 +643,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
             }
 
             // Cause the screen to focus on the crystal.
-            if (target.WithinRange(npc.Center, 5000f))
-            {
-                target.Infernum_Camera().ScreenFocusPosition = npc.Center;
-                target.Infernum_Camera().ScreenFocusHoldInPlaceTime = 60;
-                target.Infernum_Camera().ScreenFocusInterpolant = 1f;
-            }
+            Utilities.ApplyCameraFocusToNearbyPlayers(npc.Center, 1f, npc.Center);
 
             // Mark Providence as defeated at night. This is necessary for ensuring that the moonlight dye drops.
             //npc.ModNPC<ProvidenceBoss>().de = wasSummonedAtNight;
@@ -663,7 +658,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
                 int shootRate = (int)Lerp(12f, 5f, Utils.GetLerpValue(0f, 250f, deathEffectTimer, true));
                 if (deathEffectTimer % shootRate == shootRate - 1 || deathEffectTimer == 92f)
                 {
-                    target.Infernum_Camera().CurrentScreenShakePower = 2f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 2f);
 
                     for (int i = 0; i < 3; i++)
                     {
@@ -689,7 +684,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
                                 SoundEngine.PlaySound(CommonCalamitySounds.FlareSound, target.Center);
                                 SoundEngine.PlaySound(HolyBlast.ImpactSound, target.Center);
                             }
-                            target.Infernum_Camera().CurrentScreenShakePower = 8f;
+                            Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 8f);
 
                         }
 
@@ -705,7 +700,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
                     GeneralParticleHandler.SpawnParticle(new BurstParticle(npc.Center, Vector2.Zero, DoGPostProviCutscene.TimeColor, 36, true));
                     ScreenEffectSystem.SetBlurEffect(npc.Center, 1f, 30);
                     ScreenEffectSystem.SetFlashEffect(npc.Center, 1.3f, 30);
-                    target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
 
                     ReleaseSparkles(npc.Center, 6, 150);
                     SoundEngine.PlaySound(CommonCalamitySounds.FlareSound, target.Center);
@@ -760,13 +755,8 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
             npc.ShowNameOnHover = false;
 
             // Cause the screen to focus on the crystal.
-            if (target.WithinRange(npc.Center, 5000f) && !NPC.AnyNPCs(dogHeadType))
-            {
-                target.Infernum_Camera().ScreenFocusPosition = npc.Center + Vector2.UnitY * 55f;
-                target.Infernum_Camera().ScreenFocusHoldInPlaceTime = 45;
-
-                target.Infernum_Camera().ScreenFocusInterpolant = 1f;
-            }
+            if (!NPC.AnyNPCs(dogHeadType))
+                Utilities.ApplyCameraFocusToNearbyPlayers(npc.Center + Vector2.UnitY * 55f, 1f, npc.Center);
 
             if (deathEffectsTimer < DoGPostProviCutscene.StartTime + DoGPostProviCutscene.SlowddownTime + (int)(DoGPostProviCutscene.ChompTime * 0.5f))
             {
@@ -897,7 +887,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
                 {
                     MaxInstances = 1
                 });
-                target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
                 ScreenEffectSystem.SetFlashEffect(npc.Center, 1f, 10);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -912,7 +902,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
             if (performedEndEffects == 0f && attackIsAboutToEnd)
             {
                 SoundEngine.PlaySound(InfernumSoundRegistry.ProvidenceBurnSound);
-                target.Infernum_Camera().CurrentScreenShakePower = 20f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 20f);
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 1f, 30);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -934,7 +924,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
             {
                 // Play a sizzle sound and create light effects to accompany the circle.
                 SoundEngine.PlaySound(InfernumSoundRegistry.SizzleSound);
-                target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
                 ScreenEffectSystem.SetFlashEffect(npc.Center, 1f, fireballCircleShootRate / 3);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1600,7 +1590,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
             {
                 // Play a sizzle sound and create light effects to accompany the circle.
                 SoundEngine.PlaySound(InfernumSoundRegistry.SizzleSound);
-                target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
                 ScreenEffectSystem.SetFlashEffect(npc.Center, 1f, fireballCircleShootRate / 3);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1950,7 +1940,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Providence
 
             // Create screenshake effects.
             if (!attackIsAlmostDone)
-                target.Infernum_Camera().CurrentScreenShakePower = Lerp(1f, 10f, Pow(attackCompletion, 2.1f));
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, Lerp(1f, 10f, Pow(attackCompletion, 2.1f)));
 
             // Transform into the crystal at the end of the attack.
             npc.Opacity = Utils.GetLerpValue(0.95f, 0.7f, attackCompletion, true);

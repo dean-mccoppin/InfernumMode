@@ -360,7 +360,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Destroyer
                     {
                         SoundEngine.PlaySound(Apollo.MissileLaunchSound, target.Center);
 
-                        target.Infernum_Camera().CurrentScreenShakePower = 8f;
+                        Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 8f);
                         ScreenEffectSystem.SetBlurEffect(npc.Center, 0.3f, 10);
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -599,7 +599,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Destroyer
                 if (attackTimer == 1f)
                 {
                     SoundEngine.PlaySound(InfernumSoundRegistry.DestroyerChargeUpSound with { Pitch = 0.25f, Volume = 1.67f }, target.Center);
-                    target.Infernum_Camera().CurrentScreenShakePower = 9f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 9f);
                     ScreenEffectSystem.SetBlurEffect(npc.Center, 0.5f, 16);
                 }
 

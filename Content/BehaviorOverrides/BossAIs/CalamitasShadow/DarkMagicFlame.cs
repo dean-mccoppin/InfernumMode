@@ -78,7 +78,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
             {
                 float acceleration = 1f;
                 float maxSpeed = 36f;
-                if (CalamityGlobalNPC.calamitas != -1 && ImbuedWithHex("Zeal"))
+                if (ImbuedWithHex("Zeal"))
                 {
                     // Start out slower if acceleration is expected.
                     if (AccelerationRequired == 0f)
@@ -91,13 +91,18 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                     acceleration = 1.037f;
                 }
 
-                // Home in weakly if the shadow's target has the appropriate hex.
-                if (CalamityGlobalNPC.calamitas != -1 && ImbuedWithHex("Accentuation"))
+                // Home in weakly toward the closest player if imbued with the appropriate hex.
+                // Uses closest player rather than npc.target so projectiles spread across players in multiplayer.
+                if (ImbuedWithHex("Accentuation"))
                 {
-                    float idealDirection = Projectile.AngleTo(Main.player[Main.npc[CalamityGlobalNPC.calamitas].target].Center);
-                    Projectile.velocity = Projectile.velocity.RotateTowards(idealDirection, 0.012f);
-                    if (Projectile.velocity.Length() > 18.75f)
-                        Projectile.velocity *= 0.98f;
+                    Player closestPlayer = Projectile.FindClosestActivePlayer();
+                    if (closestPlayer is not null)
+                    {
+                        float idealDirection = Projectile.AngleTo(closestPlayer.Center);
+                        Projectile.velocity = Projectile.velocity.RotateTowards(idealDirection, 0.012f);
+                        if (Projectile.velocity.Length() > 18.75f)
+                            Projectile.velocity *= 0.98f;
+                    }
                 }
 
                 if (acceleration > 1f && Projectile.velocity.Length() < maxSpeed)

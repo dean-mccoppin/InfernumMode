@@ -32,7 +32,7 @@ namespace InfernumMode.Core.GlobalInstances.Players
                 DisplayMessageTimer--;
 
                 if (DisplayMessageTimer == 0)
-                    Main.NewText(Warning.Value, Color.Red);
+                    Main.NewText(Warning.Value, Color.Yellow);
             }
         }
     }

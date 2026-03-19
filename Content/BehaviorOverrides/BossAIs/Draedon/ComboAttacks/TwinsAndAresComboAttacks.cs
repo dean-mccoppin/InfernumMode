@@ -483,7 +483,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ComboAttacks
                         EnrageTimer = 1500f;
                     }
 
-                    target.Infernum_Camera().CurrentScreenShakePower = 2f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 2f);
                 }
 
                 // Decide rotation.

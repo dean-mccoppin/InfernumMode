@@ -1635,7 +1635,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.SupremeCalamitas
             if (attackTimer >= screenShakeTime)
                 screenShakeFactor = 0f;
 
-            target.Calamity().GeneralScreenShakePower = screenShakeFactor;
+            Utilities.ApplyScreenShakeToNearbyPlayers(npc.Center, screenShakeFactor);
 
             // Play a summoning sound
             if (attackTimer == 1f)
@@ -2275,7 +2275,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.SupremeCalamitas
                     SoundEngine.PlaySound(InfernumSoundRegistry.CalThunderStrikeSound, npc.Center);
 
                     // Create some screenshake.
-                    target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
 
                     npc.Center = target.Center - Main.rand.NextVector2Unit() * Main.rand.NextFloat(180f, 455f);
                     npc.velocity = Vector2.Zero;

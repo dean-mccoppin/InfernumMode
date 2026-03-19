@@ -62,6 +62,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ArtemisAndApoll
             ExoMechManagement.Phase4LifeRatio
         ];
 
+        // Lower HP scaling for Exo Mechs since multiple entities are present.
+        public override float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.3f;
+
         #region Loading
         public override void Load()
         {
@@ -828,7 +831,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ArtemisAndApoll
                     npc.velocity = npc.SafeDirectionTo(target.Center) * flamethrowerFlySpeed;
                     Utilities.CreateShockwave(npc.Center - npc.velocity * 4f);
                     ScreenEffectSystem.SetBlurEffect(npc.Center, 0.3f, 45);
-                    target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
 
                     ExoMechsSky.CreateLightningBolt(25);
 
@@ -1040,7 +1043,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ArtemisAndApoll
                         SoundEngine.PlaySound(CommonCalamitySounds.ELRFireSound, npc.Center);
                         Utilities.CreateShockwave(npc.Center, 4, 15, 192f);
                         ScreenEffectSystem.SetFlashEffect(npc.Center, 1f, 45);
-                        target.Infernum_Camera().CurrentScreenShakePower = 3f;
+                        Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 3f);
 
                         npc.velocity = npc.SafeDirectionTo(target.Center + target.velocity * chargePredictiveness) * chargeSpeed;
 
@@ -1488,7 +1491,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.ArtemisAndApoll
                 // Have Artemis sweep around.
                 if (attackTimer >= laserbeamTelegraphTime)
                 {
-                    target.Infernum_Camera().CurrentScreenShakePower = 2f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 2f);
                     frame += 10f;
                     float spinAngle = (attackTimer - laserbeamTelegraphTime) / laserbeamSweepTime * spinArc * -spinDirection;
                     npc.velocity = Vector2.Zero;

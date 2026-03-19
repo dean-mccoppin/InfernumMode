@@ -350,9 +350,12 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.BrimstoneElemental
             // Hurt the player if they walk into the vines.
             else if (!target.WithinRange(circleCenter, circleRadius - 8f) && circleRadius >= RoseCircleRadius - 80f)
             {
-                int roseDamage = Main.rand.Next(120, 135);
                 target.Center = circleCenter + (target.Center - circleCenter).SafeNormalize(Vector2.Zero) * (RoseCircleRadius - 10f);
-                target.Hurt(PlayerDeathReason.ByCustomReason($"{target.name} was violently pricked by roses."), roseDamage, 0);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int roseDamage = Main.rand.Next(120, 135);
+                    target.Hurt(PlayerDeathReason.ByCustomReason($"{target.name} was violently pricked by roses."), roseDamage, 0);
+                }
             }
 
             // Make the rose circle move outward.

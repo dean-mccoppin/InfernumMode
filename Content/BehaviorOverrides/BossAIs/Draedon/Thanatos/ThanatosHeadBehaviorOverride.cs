@@ -66,6 +66,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Thanatos
             ExoMechManagement.Phase4LifeRatio
         ];
 
+        // Lower HP scaling for Exo Mechs since multiple entities are present.
+        public override float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.3f;
+
         #region Loading
         public override void Load()
         {
@@ -673,7 +676,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Thanatos
             if (attackTimer == slowdownTime + chargePreparationTime / 2)
             {
                 SoundEngine.PlaySound(ScorchedEarth.RocketShoot, target.Center);
-                target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
             }
 
             // Begin the charge.
@@ -837,7 +840,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Thanatos
                 }
 
                 ScreenEffectSystem.SetBlurEffect(npc.Center, 1.7f, 45);
-                target.Infernum_Camera().CurrentScreenShakePower = 7f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 7f);
             }
 
             // Create explosions that make sparks after the lasers are fired.

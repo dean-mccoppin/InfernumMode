@@ -386,7 +386,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Ravager
                     jumpSubstate = 0f;
                     jumpCounter++;
 
-                    target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
                     if (jumpCounter >= jumpCount)
                     {
                         npc.velocity.X = 0f;
@@ -583,7 +583,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Ravager
                     npc.netUpdate = true;
                 }
 
-                target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
                 hasDoneGroundHitEffects = 1f;
                 attackTimer = 0f;
                 npc.velocity.Y = 0f;
@@ -670,7 +670,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Ravager
                 npc.velocity.X = 0f;
                 npc.netUpdate = true;
 
-                target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
 
                 // Create flame pillar telegraphs.
                 if (Main.netMode != NetmodeID.MultiplayerClient)

@@ -732,7 +732,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                     }
 
                     ScreenEffectSystem.SetBlurEffect(staffEnd, 0.7f, 45);
-                    target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
 
                     Utilities.DeleteAllProjectiles(false, ModContent.ProjectileType<DarkMagicFlame>());
 
@@ -768,7 +768,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                 if (attackTimer == redirectTime + seekerSummonTime + seekerShootTime + laserTelegraphTime)
                 {
                     ScreenEffectSystem.SetBlurEffect(staffEnd, 0.7f, 45);
-                    target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
                     SoundEngine.PlaySound(InfernumSoundRegistry.EntropyRayFireSound, target.Center);
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1036,7 +1036,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                 {
                     SoundEngine.PlaySound(InfernumSoundRegistry.ProvidenceLavaEruptionSmallSound, target.Center);
                     ScreenEffectSystem.SetFlashEffect(target.Center - Vector2.UnitY * 500f, 4f, 35);
-                    target.Infernum_Camera().CurrentScreenShakePower = 10f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 10f);
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
@@ -1325,7 +1325,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                 npc.dontTakeDamage = true;
                 npc.velocity.X *= 0.75f;
                 npc.Opacity = 1f;
-                target.Infernum_Camera().CurrentScreenShakePower = attackTimer / rumbleTime * 6f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, attackTimer / rumbleTime * 6f);
             }
 
             // Make the forcefield dissipate.
@@ -1458,7 +1458,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                 npc.velocity = Vector2.Zero;
 
                 ScreenEffectSystem.SetFlashEffect(npc.Center, 3f, 45);
-                target.Infernum_Camera().CurrentScreenShakePower = 15f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 15f);
             }
 
             // Look at the target and slow down.
@@ -1552,7 +1552,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.CalamitasShadow
                 SoundEngine.PlaySound(SCalBoss.DashSound, npc.Center);
                 SoundEngine.PlaySound(InfernumSoundRegistry.GlassmakerFireEndSound with { Pitch = 0.125f }, target.Center);
                 ScreenEffectSystem.SetFlashEffect(npc.Center, 1f, 15);
-                target.Infernum_Camera().CurrentScreenShakePower = 6f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 6f);
                 npc.velocity = npc.SafeDirectionTo(target.Center) * baseChargeSpeed;
             }
 

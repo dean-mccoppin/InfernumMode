@@ -146,6 +146,14 @@ namespace InfernumMode.Core.OverridingSystem
         public virtual void BossHeadSlot(NPC npc, ref int index) { }
 
         /// <summary>
+        /// Returns the HP multiplier applied in multiplayer based on player count.
+        /// Default formula: 1.0 + (playerCount - 1) * 0.5 (i.e. 1.5x for 2 players, 2.0x for 3, 2.5x for 4).
+        /// Multi-part bosses should override this to return lower values.
+        /// </summary>
+        /// <param name="playerCount">The number of active players when the boss spawned.</param>
+        public virtual float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.5f;
+
+        /// <summary>
         /// Use this to provide a list of tips to display on player death with the blasted tophat.
         /// </summary>
         /// <returns></returns>

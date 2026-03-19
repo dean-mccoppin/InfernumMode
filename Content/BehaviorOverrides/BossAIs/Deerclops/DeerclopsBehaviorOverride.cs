@@ -314,7 +314,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Deerclops
                         MediumMistParticle snow = new(snowSpawnPosition, snowVelocity, Color.LightGray, Color.LightCyan, 1.3f, 255f);
                         GeneralParticleHandler.SpawnParticle(snow);
                     }
-                    target.Calamity().GeneralScreenShakePower = 10f;
+                    Utilities.ApplyScreenShakeToNearbyPlayers(npc.Center, 10f);
                     npc.netUpdate = true;
                 }
             }

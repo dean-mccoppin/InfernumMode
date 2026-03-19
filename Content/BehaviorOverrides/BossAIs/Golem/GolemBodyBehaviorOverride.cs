@@ -769,7 +769,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Golem
 
                     if (hitGround)
                     {
-                        target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                        Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
 
                         // Create acoustic and visual effects to accompany the ground slam effect.
                         SoundEngine.PlaySound(SoundID.Item14, npc.Bottom);
@@ -1208,14 +1208,14 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Golem
             if (attackTimer == laserTelegraphTime)
             {
                 SoundEngine.PlaySound(CommonCalamitySounds.LaserCannonSound, target.Center);
-                target.Calamity().GeneralScreenShakePower = 12f;
+                Utilities.ApplyScreenShakeToNearbyPlayers(npc.Center, 12f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     Utilities.NewProjectileBetter(npc.Center, coreLaserRayDirection.ToRotationVector2(), ModContent.ProjectileType<ThermalDeathray>(), BodyLaserRayDamage, 0f, -1, 0f, laserLifetime);
             }
 
             // Maintain screen shake effects.
             if (attackTimer >= laserTelegraphTime)
-                target.Calamity().GeneralScreenShakePower = MathF.Max(target.Calamity().GeneralScreenShakePower, 2f);
+                Utilities.ApplyScreenShakeToNearbyPlayers(npc.Center, 2f);
 
             // Create lasers from the core after firing.
             if (attackTimer > laserTelegraphTime && attackTimer % coreLaserFireRate == coreLaserFireRate - 1f)

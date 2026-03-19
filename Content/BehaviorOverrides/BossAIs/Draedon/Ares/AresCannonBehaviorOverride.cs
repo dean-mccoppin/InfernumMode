@@ -23,6 +23,9 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Draedon.Ares
     {
         public static NPC Ares => Main.npc[CalamityGlobalNPC.draedonExoMechPrime];
 
+        // Lower HP scaling for Exo Mechs since multiple entities are present.
+        public override float GetMultiplayerHPScaleFactor(int playerCount) => 1f + (playerCount - 1) * 0.3f;
+
         public abstract string GlowmaskTexturePath { get; }
 
         public abstract float AimPredictiveness { get; }

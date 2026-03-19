@@ -841,8 +841,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Yharon
             if (attackTimer >= cameraPanDelay)
             {
                 float cameraPanInterpolant = Utils.GetLerpValue(cameraPanDelay, cameraPanDelay + 10f, attackTimer, true) * Utils.GetLerpValue(cameraPanTime, cameraPanTime - 10f, attackTimer, true);
-                target.Infernum_Camera().ScreenFocusInterpolant = cameraPanInterpolant;
-                target.Infernum_Camera().ScreenFocusPosition = npc.Center;
+                Utilities.ApplyCameraFocusToNearbyPlayers(npc.Center, cameraPanInterpolant, npc.Center);
             }
 
             // Perform the charge after camera effects are done.
@@ -1366,8 +1365,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Yharon
             if (attackTimer >= cameraPanDelay1)
             {
                 float cameraPanInterpolant = Utils.GetLerpValue(cameraPanDelay1, cameraPanDelay1 + 10f, attackTimer, true) * Utils.GetLerpValue(cameraPanTime1, cameraPanTime1 - 10f, attackTimer, true);
-                target.Infernum_Camera().ScreenFocusInterpolant = cameraPanInterpolant;
-                target.Infernum_Camera().ScreenFocusPosition = npc.Center;
+                Utilities.ApplyCameraFocusToNearbyPlayers(npc.Center, cameraPanInterpolant, npc.Center);
             }
 
             // Have Yharon disappear before flying into the sky as a bunch of auric energy.
@@ -1397,8 +1395,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Yharon
             {
                 float adjustedTimer = attackTimer - cameraPanTime1 - fadeOutTime;
                 float cameraPanInterpolant = Utils.GetLerpValue(0f, 10f, adjustedTimer, true) * Utils.GetLerpValue(energyChargeTime, energyChargeTime - 10f, adjustedTimer, true);
-                target.Infernum_Camera().ScreenFocusInterpolant = cameraPanInterpolant;
-                target.Infernum_Camera().ScreenFocusPosition = npc.Center;
+                Utilities.ApplyCameraFocusToNearbyPlayers(npc.Center, cameraPanInterpolant, npc.Center);
 
                 // Make the background get progressively brighter.
                 float flashIntensity = Utils.GetLerpValue(0f, energyChargeTime - 30f, adjustedTimer, true);
@@ -1408,7 +1405,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Yharon
                 if (attackTimer % 45f == 44f)
                 {
                     YharonSky.CreateSmokeBurst();
-                    target.Infernum_Camera().CurrentScreenShakePower = 12f;
+                    Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 12f);
                 }
 
                 // Create pulse rungs and bloom periodically.
@@ -1458,7 +1455,7 @@ namespace InfernumMode.Content.BehaviorOverrides.BossAIs.Yharon
                 SoundEngine.PlaySound(InfernumSoundRegistry.ProvidenceLavaEruptionSound with { Volume = 2f });
 
                 npc.Infernum().ExtraAI[AttackCycleIndexIndex] = -1f;
-                target.Infernum_Camera().CurrentScreenShakePower = 16f;
+                Utilities.ApplyCameraShakeToNearbyPlayers(npc.Center, 16f);
 
                 LumUtils.BroadcastLocalizedText("Mods.InfernumMode.Status.YharonSecondPhase", Color.Orange);
                 SelectNextAttack(npc, ref attackType);
